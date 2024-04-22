@@ -1,0 +1,67 @@
+<p style="color: green"><%= notice %></p>
+
+<div id="page-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <ol class="breadcrumb">
+          <li class="active">
+            <h1><i class="fas fa-gear"></i> Configurações</h1>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <%= form_with(model: @setting, url: settings_path, method: :post, html: { class: "row g-3" }) do |form| %>
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= form.label :key, "Chave da API envio SMS", class: "form-label" %>
+        <%= form.text_field :key, id: 'form7Example1', class: 'form-control', required: true %>
+      </div>
+    </div>
+    <div class="col-md-12 mt-3"> <!-- Alterado para col-md-12 -->
+      <div class="form-group">
+        <%= form.submit "Salvar", class: "btn btn-primary", id: "submit-btn" %>
+      </div>    
+    </div>
+  <% end %>
+</div>
+
+<% if @settings.any? %>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h2 class="mb-3">Chave atual da API de envio SMS</h2>
+        <div class="alert alert-primary" role="alert">
+          <%= @settings.last.key %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const submitButton = document.getElementById("submit-btn");
+    
+    if (submitButton) {
+      submitButton.addEventListener("click", function(event) {
+        if (!confirm("Tem certeza que deseja salvar?")) {
+          event.preventDefault(); // Cancela o envio do formulário se o usuário cancelar a confirmação
+        } else {
+          // Envie o formulário normalmente se o usuário confirmar
+          const form = document.getElementById("setting-form");
+          if (form) {
+            form.submit();
+            window.location.reload(); // Atualiza a página após o envio do formulário
+          }
+        }
+      });
+    }
+  });
+</script>

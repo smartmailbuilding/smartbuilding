@@ -1,0 +1,111 @@
+<div class="wrapper d-flex align-items-stretch">
+  <div id="content" class="p-4 p-md-5">
+    <div id="page-wrapper">
+      <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="row">
+          <div class="col-lg-12">
+            <ol class="breadcrumb">
+              <li class="active">
+                <h1><i class="fas fa-bars"></i> Dashboard</h1>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center">
+          <!-- Painel 1 - Meus Dispensers -->
+          <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-3">
+                    <i class="fa fa-building fa-5x"></i>
+                  </div>
+                  <div class="col-xs-9 text-right">
+                    <% if current_user.admin? %>
+                      <div class="huge"><%= @admin_lockers_count %></div>
+                    <% else %>
+                      <div class="huge"><%= @user_keylockers_count %></div>
+                    <% end %>
+                    <div>Meus Prédios</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Painel 3 - Meus Usuários (Somente para administradores) -->
+          <% if current_user.admin? %>
+            <div class="col-lg-3 col-md-6">
+              <div class="panel panel-green">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <i class="fa fa-user fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                      <% if current_user.admin? %>
+                        <div class="huge"><%= @admin_users_count %></div>
+                      <% else %>
+                        <div class="huge"><%= @user_keylockers_count %></div>
+                      <% end %>
+                      <div>Meus Usuários</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <!-- Painel 4 - Meus Funcionários -->
+          <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-3">
+                    <i class="fa fa-users fa-5x"></i>
+                  </div>
+                  <div class="col-xs-9 text-right">
+                    <% if current_user.admin? %>
+                      <div class="huge"><%= @admin_employees_count %></div>
+                    <% else %>
+                      <div class="huge"><%= @user_employees_count %></div>
+                    <% end %>
+                    <div>Meus Moradores</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Painel 5 - Quantidade de Doses para cada Locker -->
+          <% @lockers_associados.each do |keylocker| %>
+            <div class="col-lg-3 col-md-6">
+              <div class="panel panel-red">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <i class="fa fa-envelope fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                      <% if current_user.admin? %>
+                        <div class="huge"><%= @total_notifications %></div>
+                      <% else %>
+                        <div class="huge"><%= @total_notifications %> </div>
+                      <% end %>
+                      <div>Notificações</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

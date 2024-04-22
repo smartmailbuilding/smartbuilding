@@ -1,0 +1,113 @@
+<%= form_with(model: employee) do |form| %>
+  <% if employee.errors.any? %>
+    <div style="color: red">
+      <ul>
+        <% employee.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-md-8 mb-4">
+      <div class="card mb-4">
+        <div class="card-header py-3">
+          <h5 class="mb-0">Cadastrar novo morador</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row mb-4">
+              <div class="col">
+                <div class="form-outline">
+                  <%= form.label :Nome, class: "form-label" %>
+                  <%= form.text_field :name, id: 'form7Example1', class: 'form-control' %>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-outline">
+                  <%= form.label :Sobrenome, class: "form-label" %>
+                  <%= form.text_field :lastname, id: 'form7Example1', class: 'form-control' %>
+                </div>
+              </div>
+            </div>
+
+            <!-- Text input -->
+            <div class="form-outline mb-4">
+              <%= form.label :Email, class: "form-label" %>
+              <%= form.text_field :email, id: 'form7Example3', class: 'form-control' %>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col">
+                <div class="form-outline">
+                  <%= form.label :Telefone, class: "form-label" %>
+                  <%= form.text_field :phone, id: 'phoneNumberInput', class: 'form-control', oninput: "handleInputChange()" %>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="form-outline">
+                  <%= form.label :Numero_do_apartamento, class: "form-label" %>
+                  <%= form.text_field :numberHouse, id: 'form7Example1', class: 'form-control' %>
+                </div>
+              </div>
+            </div>
+
+            <!-- Text input -->
+            <div class="form-outline mb-4">
+              <%= form.label :Foto_do_Colaborador, class: "form-label" %>
+              <%= form.file_field :profile_picture, id: 'form7Example3', class: 'form-control' %>
+            </div>
+
+            <div class="d-flex">
+              <div class="form-group mr-2">
+                <%= form.submit 'Cadastrar Morador', class: 'btn btn-primary' %>
+              </div>
+
+              <div class="form-group">
+                <%= link_to "Voltar", employees_path, class: 'btn btn-success' %>
+              </div>            
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+<script>
+document.addEventListener('turbolinks:load', function() {
+  var input = document.querySelector("#user_phone"); // Certifique-se de substituir "user_phone" pelo ID real do seu campo de telefone
+  var iti = window.intlTelInput(input, {
+    separateDialCode: true,
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js",
+  });
+
+  // Atualize a bandeira ao carregar a página, se necessário
+  var countryCode = iti.getSelectedCountryData().iso2;
+  document.querySelector("#phone-flag").innerHTML = `<img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/1x1/${countryCode}.svg" alt="${countryCode.toUpperCase()}">`;
+
+  // Atualize a bandeira quando o país for alterado
+  input.addEventListener('countrychange', function() {
+    var countryCode = iti.getSelectedCountryData().iso2;
+    document.querySelector("#phone-flag").innerHTML = `<img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/1x1/${countryCode}.svg" alt="${countryCode.toUpperCase()}">`;
+  });
+});
+</script>
+
+<script>
+function formatPhoneNumber(phone) {
+  const phoneDigits = phone.replace(/\D/g, '');
+  const formattedPhone = `${phoneDigits.slice(0, 2)}-${phoneDigits.slice(2, 11)}`;
+  return formattedPhone;
+}
+
+function handleInputChange() {
+  const inputElement = document.getElementById('phoneNumberInput');
+  const formattedPhoneNumber = formatPhoneNumber(inputElement.value);
+  console.log(formattedPhoneNumber);
+}
+</script>

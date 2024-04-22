@@ -1,0 +1,114 @@
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <h1><i class="fas fa-users"></i> Morador</h1>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p style="color: green"><%= notice %></p>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 col-lg-9"> 
+      <div class="right_col mt-3" role="main">
+        <div class="row">
+
+          <div class="col-md-3">
+            <% if @employee&.profile_picture&.attached? %>
+              <%= image_tag @employee.profile_picture, class: "img-fluid rounded", style: "max-width: 100%;" %>
+            <% else %>
+              <%= image_tag "user.png", class: "img-fluid rounded", style: "max-width: 100%;" %>
+            <% end %>
+          </div>
+
+          <div class="col-md-9">
+            <p>
+              <strong>Nome:</strong>
+              <%= @employee.name %> <%= @employee.lastname %>
+            </p>
+
+            <p>
+              <strong>Numero do apartamento:</strong>
+              <%= @employee.numberHouse %>
+            </p>
+
+            <p>
+              <strong>Telefone:</strong>
+              <%= @employee.phone %>
+            </p>
+
+            <p>
+              <strong>Email:</strong>
+              <%= @employee.email %>
+            </p>
+              
+            <div class="btn-group d-flex align-items-center">
+              <%= link_to(edit_employee_path(@employee), class: "btn btn-primary mr-2") do %>
+                <i class="fas fa-edit"></i> Editar
+              <% end %>
+              
+              <%= link_to(employees_path, class: "btn btn-secondary mr-2") do %>
+                <i class="fas fa-arrow-left"></i> Voltar
+              <% end %>
+
+
+              <%= button_to send_sms_employee_path(@employee), method: :post, class: "btn btn-info mr-2" do %>
+                <i class="fas fa-phone"></i> Enviar SMS
+              <% end %>
+
+              <%= button_to send_email_employee_path(@employee), method: :post, class: "btn btn-warning mr-2" do %>
+                <i class="fas fa-envelope"></i> Enviar E-mail
+              <% end %>
+
+              <%= button_to enviar_mensagem_whatsapp_path(@employee), method: :post, class: "btn btn-success mr-2" do %>
+                <i class="fab fa-whatsapp"></i> Enviar Whatsapp
+              <% end %>
+
+              <%= button_to(@employee, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger mr-2") do %>
+                <i class="fas fa-trash-alt"></i> Excluir
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>Histórico de Encomendas</h2>
+<ul>
+<% @employee.employee_actions.order(created_at: :desc).limit(10).reverse.each do |action| %>
+  <li><%= action.action_description %></li>
+  <% end %>
+</ul>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('reset-pin-btn').addEventListener('click', function() {
+      // Chamar a ação AJAX para resetar PIN, enviar SMS e atualizar no banco de dados
+      resetPinAndSendSMS('<%= @employee.phone %>');
+    });
+
+    function resetPinAndSendSMS(phone) {
+      // Adicione lógica AJAX aqui
+      $.ajax({
+        type: 'PUT',
+        url: '<%= reset_pin_employee_path(@employee) %>',
+        data: { phone: phone },
+        success: function(response) {
+          alert(response.message); // Exiba uma mensagem de sucesso
+        },
+        error: function() {
+          alert('Erro ao resetar o PIN e enviar por SMS.');
+        }
+      });
+    }
+  });
+</script>

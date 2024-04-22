@@ -1,0 +1,25 @@
+databases:
+  - name: smartdispenser-app
+    databaseName: smartdispenser
+    user: smartdispenser_user
+    plan: free
+
+services:
+  - type: web
+    name: smartdispenser-app
+    runtime: ruby
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    preDeployCommand: "./bin/rails db:migrate && ./bin/rails db:seed && ./bin/rails assets:precompile"
+
+    preDeployCommand: "./bin/rails db:migrate" # preDeployCommand only available on paid instance types
+    startCommand: "./bin/rails server"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: smartdispenser-app
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: WEB_CONCURRENCY
+        value: 2 # sensible default

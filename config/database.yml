@@ -1,0 +1,24 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  port: 5432
+
+
+development:
+  <<: *default
+  database: smartlocker_development
+
+  
+test:
+  <<: *default
+  database: smartlocker_test
+
+
+production:
+  <<: *default
+  database: smartlocker_production
+  username: smartlocker
+  password: <%= ENV["SMARTLOCKER_DATABASE_PASSWORD"] %>
+  
+

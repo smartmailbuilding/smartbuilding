@@ -1,0 +1,64 @@
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <h1><i class="fas fa-desktop"></i> Cadastro via leitor RFID</h1>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">  
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Cartão RFID</th>
+          <th>Data de Criação</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% HistoryEntry.all.each do |entry| %>
+          <tr>
+          <td><%= entry.saveCards.slice(0, 2) + '*' * (entry.saveCards.length - 2) %></td>
+          <td><%= entry.created_at.strftime("%d/%m/%Y - %H:%M:%S") %></td>
+            <td>
+              <% if Employee.exists?(cardRFID: entry.saveCards) %>
+                <%= button_to "Cartão Já Existe", "#", disabled: true, class: "btn btn-secondary" %>
+              <% else %>
+                <%= link_to new_employee_path(cardRFID: entry.saveCards), class: "btn btn-primary", method: :get do %>
+                  <i class="fa fa-plus"></i> Cadastrar
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<div class="text-center mt-3 d-flex justify-content-center">
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <%= will_paginate @history_entries, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+    </ul>
+  </nav>
+</div>
+
+
+<% @users.each do |user| %>
+<td>
+    <% user.keylockers.each do |keylocker| %>
+      <li><%= keylocker.nameDevice %></li>
+    <% end %>
+</td>
+<% end %>

@@ -1,0 +1,80 @@
+<p style="color: green"><%= notice %></p>
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <ol class="breadcrumb">
+                    <li class="active">
+                        <h1><i class="fas fa-building"></i> Meus Prédios</h1>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 col-lg-9"> 
+            <div class="right_col mt-3" role="main">
+                <div class="row">
+                    <div class="col-md-3">
+                        <%= image_tag 'predio.jpg', class: 'card-img-top', alt: 'Produto 1' %>
+                    </div>
+                    <div class="col-md-9">
+
+                      <p>
+                        <strong>Nome do edifício:</strong>
+                        <%= @keylocker.nameBuilding %>
+                      </p> 
+
+                      <p>
+                        <strong>Codigo Postal:</strong>
+                        <%= @keylocker.zip_code %>
+                      </p>
+
+                      <p>
+                        <strong>Bairro:</strong>
+                        <%= @keylocker.neighborhood %>
+                      </p> 
+                      
+                      <p>
+                        <strong>Rua:</strong>
+                        <%= @keylocker.street %>
+                      </p> 
+                    
+                      <p>
+                        <strong>Estado:</strong>
+                        <%= @keylocker.state %>
+                      </p>
+
+                      <p>
+                        <strong>Cidade:</strong>
+                        <%= @keylocker.city %>
+                      </p>
+
+                      <p>
+                        <strong>Complemento:</strong>
+                        <%= @keylocker.complement %>
+                      </p>
+                    
+                      <div class="btn-group">
+                      <%= link_to edit_dispenser_path(@keylocker), class: "btn btn-primary mr-2" do %>
+                        <i class="fas fa-edit"></i> Editar
+                      <% end %>
+                      
+                      <%= link_to dispensers_path, class: "btn btn-secondary mr-2" do %>
+                        <i class="fas fa-arrow-left"></i> Voltar
+                      <% end %>
+                      
+                      <%= button_to @keylocker, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger mr-2" do %>
+                        <i class="fas fa-trash-alt"></i> Excluir
+                      <% end %>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

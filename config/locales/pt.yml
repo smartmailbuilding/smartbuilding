@@ -1,0 +1,15 @@
+pt:
+  date:
+    day_names:
+      - Domingo
+      - Segunda
+      - Terça
+      - Quarta
+      - Quinta
+      - Sexta
+      - Sábado
+
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "O registro não é válido"
